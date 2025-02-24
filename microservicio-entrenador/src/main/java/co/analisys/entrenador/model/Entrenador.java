@@ -1,7 +1,8 @@
-package co.analisys.gimnasio.model;
+package co.analisys.entrenador.model;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +11,9 @@ import lombok.Data;
 @Entity
 @AllArgsConstructor
 public class Entrenador {
-    @EmbeddedId
-    private EntrenadorId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String nombre;
     private String especialidad;
 }

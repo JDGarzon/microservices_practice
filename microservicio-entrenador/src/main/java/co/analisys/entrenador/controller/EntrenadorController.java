@@ -1,17 +1,16 @@
-package co.analisys.gimnasio.controller;
+package co.analisys.entrenador.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.analisys.gimnasio.model.FechaInscripcion;
-import co.analisys.gimnasio.model.Entrenador;
-import co.analisys.gimnasio.service.EntrenadorService;
+import co.analisys.entrenador.model.Entrenador;
+import co.analisys.entrenador.service.EntrenadorService;
 
 @RestController
 @RequestMapping("/entrenador")
@@ -24,8 +23,8 @@ public class EntrenadorController {
         return entrenadorService.obtenerTodosEntrenadores();
     }
 
-    @PostMapping("/add")
-    public Entrenador registrarEntrenador(@RequestParam String nombre, @RequestParam String especialidad) {
-        return entrenadorService.obtenerTodosEntrenadores(new Entrenador(null, nombre,especialidad));
+    @PostMapping("/add/{nombre}/{especialidad}")
+    public Entrenador registrarEntrenador(@PathVariable String nombre, @PathVariable String especialidad) {
+        return entrenadorService.registrarEntrenador(new Entrenador(null,nombre, especialidad));
     }
 }

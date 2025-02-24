@@ -1,4 +1,4 @@
-package co.analisys.gimnasio;
+package co.analisys.entrenador;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
