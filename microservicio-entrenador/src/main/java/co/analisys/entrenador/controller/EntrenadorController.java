@@ -27,4 +27,9 @@ public class EntrenadorController {
     public Entrenador registrarEntrenador(@PathVariable String nombre, @PathVariable String especialidad) {
         return entrenadorService.registrarEntrenador(new Entrenador(null,nombre, especialidad));
     }
+
+    @GetMapping("/{id}")
+    public Entrenador obtenerEntrenador(@PathVariable Long id){
+        return entrenadorService.obtenerEntrenador(id);
+    }
 }
