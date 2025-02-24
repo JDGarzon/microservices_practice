@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.analisys.equipo.model.Equipo;
@@ -23,8 +23,8 @@ public class MiembroController {
         return equipoService.obtenerTodosEquipos();
     }
 
-    @PostMapping("/add")
-    public Equipo addMiembro(@RequestParam String nombre, @RequestParam String descripcion,@RequestParam int cantidad) {
+    @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")
+    public Equipo addMiembro(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
         return equipoService.registrarEquipo(new Equipo(null, nombre,descripcion,cantidad));
     }
 }

@@ -1,7 +1,8 @@
 package co.analisys.gimnasio.model;
 
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +12,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Miembro {
     @Id
-    @EmbeddedId
-    private MiembroId id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String nombre;
     private String email;
     private FechaInscripcion fechaInscripcion;
