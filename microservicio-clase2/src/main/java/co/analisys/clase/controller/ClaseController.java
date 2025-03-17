@@ -19,12 +19,18 @@ public class ClaseController {
     @Autowired
     private ClaseService claseService;
 
+    @Operation(summary = "Obtener todas las clases"
+            , description = "Obtiene todas las clases registradas en la base de datos"
+            , tags = {"clase"})
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Clase> obtenerTodasClases() {
         return claseService.obtenerTodasClases();
     }
 
+    @Operation(summary = "Registrar una nueva clase"
+            , description = "Registra una nueva clase en la base de datos"
+            , tags = {"clase"})
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Clase registrarClase(@RequestBody Clase nuevaClase) {
