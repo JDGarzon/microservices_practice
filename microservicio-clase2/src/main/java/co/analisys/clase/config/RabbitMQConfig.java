@@ -10,14 +10,31 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
+
+
+    public static final String ROUTING_KEY_HORARIO = "notificacion.horario";
+
+    @Bean
+    public Queue horarioQueue() {
+        return new Queue("horario.queue", true);
+    }
+
     @Bean
     public Queue notificacionQueue() {
         return new Queue("notificacion.queue", true);
     }
+
     @Bean
     public TopicExchange notificacionExchange() {
         return new TopicExchange("notificacion.exchange");
     }
+
+    @Bean
+    public Binding bindingHorario(Queue horarioQueue, TopicExchange notificacionExchange) {
+        return
+        BindingBuilder.bind(horarioQueue).to(notificacionExchange).with(ROUTING_KEY);
+    }
+
     @Bean
     public Binding binding(Queue notificacionQueue, TopicExchange notificacionExchange) {
         return
