@@ -12,13 +12,18 @@ import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.analisys.clase.model.Message_offset;
+import co.analisys.clase.repository.OffsetRepository;
+
 @Service
 public class RecuperacionService {
     @Autowired
     private KafkaConsumer<String, String> consumer;
+    @Autowired
+    private OffsetRepository offsetRepository;
 
     public void iniciarProcesamiento() {
-        consumer.subscribe(Arrays.asList("topic-a", "topic-b"));
+        consumer.subscribe(Arrays.asList("datos-entrenamiento", "ocupacion-clases"));
         // Cargar último offset procesado desde una base de datos
         Map<TopicPartition, Long> ultimoOffsetProcesado = cargarUltimoOffset();
         for (Map.Entry<TopicPartition, Long> entry : ultimoOffsetProcesado.entrySet()) {
@@ -34,11 +39,14 @@ public class RecuperacionService {
     }
 
     private Map<TopicPartition, Long> cargarUltimoOffset() {
-        // Simulate loading the last processed offset from a database
-        Map<TopicPartition, Long> offsets = new HashMap<>();
-        offsets.put(new TopicPartition("topic-a", 0), 0L);
-        offsets.put(new TopicPartition("topic-b", 0), 0L);
-        return offsets;
+        offsetRepository.findAll().forEach(offset -> {
+            consumer.seek(new TopicPartition(offset.getTopic(), offset.getPartition()), offset.getOffset());
+        });
+        Map<TopicPartition, Long> ultimoOffsetProcesado = new HashMap<>();
+        consumer.assignment().forEach(topicPartition -> {
+            ultimoOffsetProcesado.put(topicPartition, consumer.position(topicPartition));
+        });
+        return ultimoOffsetProcesado;
     }
 
     private void procesarRecord(ConsumerRecord<String, String> record) {
@@ -47,13 +55,8 @@ public class RecuperacionService {
     }
 
     private void guardarOffset(String topic, int partition, long offset) {
-        // Guardar el offset en una base de datos transaccional
-        System.out.println("Guardando offset " + offset + " para el topic " + topic + " y partición " + partition);
-        
+        Message_offset offsetO = new Message_offset(topic, partition, offset);
+        offsetRepository.save(offsetO);
     }
-
     
-
-
-
 }

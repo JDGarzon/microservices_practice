@@ -1,7 +1,6 @@
 package co.analisys.clase.model;
 
-import java.time.LocalDateTime;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,22 +10,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class OcupacionClase {
-
+@Entity
+public class Message_offset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    String claseId;
-    int ocupacionActual;
-    LocalDateTime now;
 
-    public OcupacionClase(String claseId, int ocupacionActual, LocalDateTime now) {
-        this.claseId = claseId;
-        this.ocupacionActual = ocupacionActual;
-        this.now = now;
+    public Message_offset(String topic, int partition, long offset) {
+        this.topic = topic;
+        this.partition = partition;
+        this.offset = offset;
     }
+
+    String topic;
+    int partition; 
     
+    @Column(name = "msg_offset")
+    long offset;
 }

@@ -1,4 +1,5 @@
 package co.analisys.clase.config;
+
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -32,7 +33,7 @@ public class RabbitMQConfig {
     @Bean
     public Binding bindingHorario(Queue horarioQueue, TopicExchange notificacionExchange) {
         return
-        BindingBuilder.bind(horarioQueue).to(notificacionExchange).with(ROUTING_KEY);
+        BindingBuilder.bind(horarioQueue).to(notificacionExchange).with(ROUTING_KEY_HORARIO);
     }
 
     @Bean

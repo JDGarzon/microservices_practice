@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import co.analisys.clase.model.Clase;
 import co.analisys.clase.repository.ClaseRepository;
 import co.analisys.clase.exception.ClaseNoEncontradoException;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import co.analisys.clase.dto.NotificacionDTO;
@@ -61,7 +63,7 @@ public class ClaseService {
         return clase;
     }
 
-    public void notificarCambioHorario(NotificacionDTO notificacion) {
+    public void notificarCambioHorario(NotificacionHorarioDTO notificacion) {
         rabbitTemplate.convertAndSend("notificacion.exchange", RabbitMQConfig.ROUTING_KEY_HORARIO, notificacion);
     }
 
