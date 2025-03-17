@@ -3,6 +3,7 @@ package co.analisys.clase.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,11 +20,13 @@ public class ClaseController {
     private ClaseService claseService;
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Clase> obtenerTodasClases() {
         return claseService.obtenerTodasClases();
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Clase registrarClase(@RequestBody Clase nuevaClase) {
         return claseService.registrarClase(nuevaClase);
     }
