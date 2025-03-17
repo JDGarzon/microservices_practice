@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +66,7 @@ public class ClaseController {
         return claseService.obtenerClase(id);
     }
 
-    @postMapping("/add/{idClase}/idMiembro")
+    @PostMapping("/add/{idClase}/idMiembro")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Clase registrarMiembroAClase(@PathVariable long idClase, @PathVariable long idMiembro) {
         return claseService.registrarMiembroAClase(idClase, idMiembro);
