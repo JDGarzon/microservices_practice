@@ -22,7 +22,11 @@ public class EntrenadorController {
 
     @Operation(summary = "Obtener todos los entrenadores"
             , description = "Obtiene todos los entrenadores registrados en la base de datos"
-            , tags = {"entrenador"})
+            , tags = {"entrenador"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Entrenadores obtenidos exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Entrenador.class)))),
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Entrenador> obtenerTodosEntrenadores() {
@@ -31,7 +35,12 @@ public class EntrenadorController {
 
     @Operation(summary = "Registrar un nuevo entrenador"
             , description = "Registra un nuevo entrenador en la base de datos"
-            , tags = {"entrenador"})
+            , tags = {"entrenador"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Entrenador registrado exitosamente", content = @Content(schema = @Schema(implementation = Entrenador.class))),
+                @ApiResponse(responseCode = "400", description = "Error en los datos del entrenador")
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @PostMapping("/add/{nombre}/{especialidad}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Entrenador registrarEntrenador(@PathVariable String nombre, @PathVariable String especialidad) {
@@ -40,7 +49,12 @@ public class EntrenadorController {
 
     @Operation(summary = "Obtener un entrenador"
             , description = "Obtiene un entrenador registrado en la base de datos"
-            , tags = {"entrenador"})
+            , tags = {"entrenador"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Entrenador obtenido exitosamente", content = @Content(schema = @Schema(implementation = Entrenador.class))),
+                @ApiResponse(responseCode = "400", description = "Error en los datos del entrenador")
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Entrenador obtenerEntrenador(@PathVariable Long id){

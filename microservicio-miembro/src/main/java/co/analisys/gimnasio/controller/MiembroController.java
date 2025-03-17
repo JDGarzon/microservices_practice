@@ -23,7 +23,11 @@ public class MiembroController {
 
     @Operation(summary = "Obtener todos los miembros"
             , description = "Obtiene todos los miembros registrados en la base de datos"
-            , tags = {"miembro"})
+            , tags = {"miembro"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Miembros obtenidos exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Miembro.class)))),
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public List<Miembro> getAllMiembros() {
@@ -32,7 +36,12 @@ public class MiembroController {
 
     @Operation(summary = "Registrar un nuevo miembro"
             , description = "Registra un nuevo miembro en la base de datos"
-            , tags = {"miembro"})
+            , tags = {"miembro"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Miembro registrado exitosamente", content = @Content(schema = @Schema(implementation = Miembro.class))),
+                @ApiResponse(responseCode = "400", description = "Error en los datos del miembro")
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @PostMapping("/add/{nombre}/{email}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Miembro addMiembro(@PathVariable String nombre, @PathVariable String email) {

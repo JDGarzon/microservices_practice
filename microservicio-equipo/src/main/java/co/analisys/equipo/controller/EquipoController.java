@@ -22,7 +22,11 @@ public class EquipoController {
 
     @Operation(summary = "Obtener todos los equipos"
             , description = "Obtiene todos los equipos registrados en la base de datos"
-            , tags = {"equipo"})
+            , tags = {"equipo"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Equipos obtenidos exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Equipo.class))))
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public List<Equipo> getAllEquipos() {
@@ -31,7 +35,12 @@ public class EquipoController {
 
     @Operation(summary = "Registrar un nuevo equipo"
             , description = "Registra un nuevo equipo en la base de datos"
-            , tags = {"equipo"})
+            , tags = {"equipo"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Equipo registrado exitosamente", content = @Content(schema = @Schema(implementation = Equipo.class)))
+                @ApiResponse(responseCode = "400", description = "Error en los datos del equipo")
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public Equipo addEquipo(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
