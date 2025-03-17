@@ -3,6 +3,7 @@ package co.analisys.gimnasio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class MiembroController {
             , description = "Obtiene todos los miembros registrados en la base de datos"
             , tags = {"miembro"})
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public List<Miembro> getAllMiembros() {
         return circulacionService.obtenerTodosMiembros();
     }
@@ -32,6 +34,7 @@ public class MiembroController {
             , description = "Registra un nuevo miembro en la base de datos"
             , tags = {"miembro"})
     @PostMapping("/add/{nombre}/{email}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Miembro addMiembro(@PathVariable String nombre, @PathVariable String email) {
         return circulacionService.registrarMiembro(new Miembro(null, nombre,email,new FechaInscripcion()));
     }

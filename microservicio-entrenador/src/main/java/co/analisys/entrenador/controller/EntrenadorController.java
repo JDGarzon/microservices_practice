@@ -24,7 +24,7 @@ public class EntrenadorController {
             , description = "Obtiene todos los entrenadores registrados en la base de datos"
             , tags = {"entrenador"})
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Entrenador> obtenerTodosEntrenadores() {
         return entrenadorService.obtenerTodosEntrenadores();
     }
@@ -42,7 +42,7 @@ public class EntrenadorController {
             , description = "Obtiene un entrenador registrado en la base de datos"
             , tags = {"entrenador"})
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Entrenador obtenerEntrenador(@PathVariable Long id){
         return entrenadorService.obtenerEntrenador(id);
     }

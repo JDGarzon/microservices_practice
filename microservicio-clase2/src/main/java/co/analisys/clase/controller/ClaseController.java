@@ -24,7 +24,7 @@ public class ClaseController {
             , description = "Obtiene todas las clases registradas en la base de datos"
             , tags = {"clase"})
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Clase> obtenerTodasClases() {
         return claseService.obtenerTodasClases();
     }

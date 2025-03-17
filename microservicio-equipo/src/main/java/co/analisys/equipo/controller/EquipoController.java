@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/equipo")
-public class MiembroController {
+public class EquipoController {
     @Autowired
     private EquipoService equipoService;
 
@@ -24,8 +24,8 @@ public class MiembroController {
             , description = "Obtiene todos los equipos registrados en la base de datos"
             , tags = {"equipo"})
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Equipo> getAllMiembros() {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
+    public List<Equipo> getAllEquipos() {
         return equipoService.obtenerTodosEquipos();
     }
 
@@ -33,8 +33,8 @@ public class MiembroController {
             , description = "Registra un nuevo equipo en la base de datos"
             , tags = {"equipo"})
     @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Equipo addMiembro(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
+    public Equipo addEquipo(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
         return equipoService.registrarEquipo(new Equipo(null, nombre,descripcion,cantidad));
     }
 }
