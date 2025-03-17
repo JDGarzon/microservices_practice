@@ -22,7 +22,11 @@ public class ClaseController {
 
     @Operation(summary = "Obtener todas las clases"
             , description = "Obtiene todas las clases registradas en la base de datos"
-            , tags = {"clase"})
+            , tags = {"clase"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Clases obtenidas exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Clase.class))))
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Clase> obtenerTodasClases() {
@@ -31,7 +35,12 @@ public class ClaseController {
 
     @Operation(summary = "Registrar una nueva clase"
             , description = "Registra una nueva clase en la base de datos"
-            , tags = {"clase"})
+            , tags = {"clase"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Clase registrada exitosamente", content = @Content(schema = @Schema(implementation = Clase.class)))
+                @ApiResponse(responseCode = "400", description = "Error en los datos de la clase")
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Clase registrarClase(@RequestBody Clase nuevaClase) {
