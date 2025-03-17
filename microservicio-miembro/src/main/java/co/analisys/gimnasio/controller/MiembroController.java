@@ -19,11 +19,17 @@ public class MiembroController {
     @Autowired
     private MiembroService circulacionService;
 
+    @Operation(summary = "Obtener todos los miembros"
+            , description = "Obtiene todos los miembros registrados en la base de datos"
+            , tags = {"miembro"})
     @GetMapping("/all")
     public List<Miembro> getAllMiembros() {
         return circulacionService.obtenerTodosMiembros();
     }
 
+    @Operation(summary = "Registrar un nuevo miembro"
+            , description = "Registra un nuevo miembro en la base de datos"
+            , tags = {"miembro"})
     @PostMapping("/add/{nombre}/{email}")
     public Miembro addMiembro(@PathVariable String nombre, @PathVariable String email) {
         return circulacionService.registrarMiembro(new Miembro(null, nombre,email,new FechaInscripcion()));

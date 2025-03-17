@@ -18,11 +18,17 @@ public class MiembroController {
     @Autowired
     private EquipoService equipoService;
 
+    @Operation(summary = "Obtener todos los equipos"
+            , description = "Obtiene todos los equipos registrados en la base de datos"
+            , tags = {"equipo"})
     @GetMapping("/all")
     public List<Equipo> getAllMiembros() {
         return equipoService.obtenerTodosEquipos();
     }
 
+    @Operation(summary = "Registrar un nuevo equipo"
+            , description = "Registra un nuevo equipo en la base de datos"
+            , tags = {"equipo"})
     @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")
     public Equipo addMiembro(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
         return equipoService.registrarEquipo(new Equipo(null, nombre,descripcion,cantidad));

@@ -18,16 +18,25 @@ public class EntrenadorController {
     @Autowired
     private EntrenadorService entrenadorService;
 
+    @Operation(summary = "Obtener todos los entrenadores"
+            , description = "Obtiene todos los entrenadores registrados en la base de datos"
+            , tags = {"entrenador"})
     @GetMapping("/all")
     public List<Entrenador> obtenerTodosEntrenadores() {
         return entrenadorService.obtenerTodosEntrenadores();
     }
 
+    @Operation(summary = "Registrar un nuevo entrenador"
+            , description = "Registra un nuevo entrenador en la base de datos"
+            , tags = {"entrenador"})
     @PostMapping("/add/{nombre}/{especialidad}")
     public Entrenador registrarEntrenador(@PathVariable String nombre, @PathVariable String especialidad) {
         return entrenadorService.registrarEntrenador(new Entrenador(null,nombre, especialidad));
     }
 
+    @Operation(summary = "Obtener un entrenador"
+            , description = "Obtiene un entrenador registrado en la base de datos"
+            , tags = {"entrenador"})
     @GetMapping("/{id}")
     public Entrenador obtenerEntrenador(@PathVariable Long id){
         return entrenadorService.obtenerEntrenador(id);
