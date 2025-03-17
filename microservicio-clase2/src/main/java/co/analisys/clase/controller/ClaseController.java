@@ -47,4 +47,24 @@ public class ClaseController {
         return claseService.registrarClase(nuevaClase);
     }
 
+    @Operation(summary = "Obtener una clase"
+            , description = "Obtiene una clase registrada en la base de datos"
+            , tags = {"clase"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Clase obtenida exitosamente", content = @Content(schema = @Schema(implementation = Clase.class))),
+                @ApiResponse(responseCode = "404", description = "Clase no encontrada"),
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
+    public Clase obtenerClase(@PathVariable Long id){
+        return claseService.obtenerClase(id);
+    }
+
+    @postMapping("/add/{idClase}/idMiembro")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
+    public Clase registrarMiembroAClase(@PathVariable long idClase, @PathVariable long idMiembro) {
+        return claseService.registrarMiembroAClase(idClase, idMiembro);
+    }
+
 }
