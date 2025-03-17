@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.analisys.gimnasio.model.FechaInscripcion;
 import co.analisys.gimnasio.model.Miembro;
 import co.analisys.gimnasio.service.MiembroService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/miembro")

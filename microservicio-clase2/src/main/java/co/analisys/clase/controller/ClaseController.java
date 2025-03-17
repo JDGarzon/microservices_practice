@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.analisys.clase.model.Clase;
 import co.analisys.clase.service.ClaseService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/clase")

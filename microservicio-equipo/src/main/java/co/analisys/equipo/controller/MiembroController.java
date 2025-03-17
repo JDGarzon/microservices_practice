@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.analisys.equipo.model.Equipo;
 import co.analisys.equipo.service.EquipoService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/equipo")

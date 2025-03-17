@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.analisys.entrenador.model.Entrenador;
 import co.analisys.entrenador.service.EntrenadorService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/entrenador")
