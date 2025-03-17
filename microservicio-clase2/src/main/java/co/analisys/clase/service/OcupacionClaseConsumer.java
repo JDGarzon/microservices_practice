@@ -3,7 +3,7 @@ package co.analisys.clase.service;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import co.analisys.clase.model.OcupacionClase;
+import co.analisys.clase.dto.OcupacionClase;
 
 @Service
 public class OcupacionClaseConsumer {

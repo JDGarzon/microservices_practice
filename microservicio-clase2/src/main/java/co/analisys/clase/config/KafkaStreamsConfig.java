@@ -16,6 +16,11 @@ import java.time.Duration;
 public class KafkaStreamsConfig {
 
     @Bean
+    public StreamsBuilder streamsBuilder() {
+        return new StreamsBuilder();
+    }
+
+    @Bean
     public KStream<String, DatosEntrenamiento> kStream(StreamsBuilder streamsBuilder) {
         KStream<String, DatosEntrenamiento> stream = streamsBuilder.stream("datos-entrenamiento");
         stream.groupByKey()
