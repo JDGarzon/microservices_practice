@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import co.analisys.clase.model.Clase;
 import co.analisys.clase.service.ClaseService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/clase")
@@ -24,7 +28,7 @@ public class ClaseController {
             , description = "Obtiene todas las clases registradas en la base de datos"
             , tags = {"clase"}
             , responses = {
-                @ApiResponse(responseCode = "200", description = "Clases obtenidas exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Clase.class))))
+                @ApiResponse(responseCode = "200", description = "Clases obtenidas exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Clase.class)))),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/all")
@@ -37,8 +41,8 @@ public class ClaseController {
             , description = "Registra una nueva clase en la base de datos"
             , tags = {"clase"}
             , responses = {
-                @ApiResponse(responseCode = "200", description = "Clase registrada exitosamente", content = @Content(schema = @Schema(implementation = Clase.class)))
-                @ApiResponse(responseCode = "400", description = "Error en los datos de la clase")
+                @ApiResponse(responseCode = "200", description = "Clase registrada exitosamente", content = @Content(schema = @Schema(implementation = Clase.class))),
+                @ApiResponse(responseCode = "400", description = "Error en los datos de la clase"),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @PostMapping("/add")
