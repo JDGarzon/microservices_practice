@@ -14,6 +14,10 @@ import co.analisys.gimnasio.model.FechaInscripcion;
 import co.analisys.gimnasio.model.Miembro;
 import co.analisys.gimnasio.service.MiembroService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/miembro")
@@ -39,7 +43,7 @@ public class MiembroController {
             , tags = {"miembro"}
             , responses = {
                 @ApiResponse(responseCode = "200", description = "Miembro registrado exitosamente", content = @Content(schema = @Schema(implementation = Miembro.class))),
-                @ApiResponse(responseCode = "400", description = "Error en los datos del miembro")
+                @ApiResponse(responseCode = "400", description = "Error en los datos del miembro"),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @PostMapping("/add/{nombre}/{email}")

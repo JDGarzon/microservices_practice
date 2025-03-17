@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import co.analisys.equipo.model.Equipo;
 import co.analisys.equipo.service.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/equipo")
@@ -24,7 +28,7 @@ public class EquipoController {
             , description = "Obtiene todos los equipos registrados en la base de datos"
             , tags = {"equipo"}
             , responses = {
-                @ApiResponse(responseCode = "200", description = "Equipos obtenidos exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Equipo.class))))
+                @ApiResponse(responseCode = "200", description = "Equipos obtenidos exitosamente", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Equipo.class)))),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/all")
@@ -37,8 +41,8 @@ public class EquipoController {
             , description = "Registra un nuevo equipo en la base de datos"
             , tags = {"equipo"}
             , responses = {
-                @ApiResponse(responseCode = "200", description = "Equipo registrado exitosamente", content = @Content(schema = @Schema(implementation = Equipo.class)))
-                @ApiResponse(responseCode = "400", description = "Error en los datos del equipo")
+                @ApiResponse(responseCode = "200", description = "Equipo registrado exitosamente", content = @Content(schema = @Schema(implementation = Equipo.class))),
+                @ApiResponse(responseCode = "400", description = "Error en los datos del equipo"),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import co.analisys.entrenador.model.Entrenador;
 import co.analisys.entrenador.service.EntrenadorService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/entrenador")
@@ -38,7 +42,7 @@ public class EntrenadorController {
             , tags = {"entrenador"}
             , responses = {
                 @ApiResponse(responseCode = "200", description = "Entrenador registrado exitosamente", content = @Content(schema = @Schema(implementation = Entrenador.class))),
-                @ApiResponse(responseCode = "400", description = "Error en los datos del entrenador")
+                @ApiResponse(responseCode = "400", description = "Error en los datos del entrenador"),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @PostMapping("/add/{nombre}/{especialidad}")
@@ -52,7 +56,7 @@ public class EntrenadorController {
             , tags = {"entrenador"}
             , responses = {
                 @ApiResponse(responseCode = "200", description = "Entrenador obtenido exitosamente", content = @Content(schema = @Schema(implementation = Entrenador.class))),
-                @ApiResponse(responseCode = "400", description = "Error en los datos del entrenador")
+                @ApiResponse(responseCode = "400", description = "Error en los datos del entrenador"),
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/{id}")
