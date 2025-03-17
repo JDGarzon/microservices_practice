@@ -10,7 +10,6 @@ import co.analisys.clase.repository.ClaseRepository;
 import co.analisys.clase.exception.ClaseNoEncontradoException;
 import java.util.ArrayList;
 
-
 @Service
 public class ClaseService {
     @Autowired
