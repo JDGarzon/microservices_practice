@@ -28,7 +28,7 @@ public class EntrenadorController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Entrenador> obtenerTodosEntrenadores() {
         return entrenadorService.obtenerTodosEntrenadores();
     }
@@ -56,7 +56,7 @@ public class EntrenadorController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Entrenador obtenerEntrenador(@PathVariable Long id){
         return entrenadorService.obtenerEntrenador(id);
     }

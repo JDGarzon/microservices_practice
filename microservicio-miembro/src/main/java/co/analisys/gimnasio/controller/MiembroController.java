@@ -3,6 +3,7 @@ package co.analisys.gimnasio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class MiembroController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public List<Miembro> getAllMiembros() {
         return circulacionService.obtenerTodosMiembros();
     }
@@ -41,6 +43,7 @@ public class MiembroController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @PostMapping("/add/{nombre}/{email}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Miembro addMiembro(@PathVariable String nombre, @PathVariable String email) {
         return circulacionService.registrarMiembro(new Miembro(null, nombre,email,new FechaInscripcion()));
     }

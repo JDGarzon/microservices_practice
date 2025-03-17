@@ -28,7 +28,7 @@ public class ClaseController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Clase> obtenerTodasClases() {
         return claseService.obtenerTodasClases();
     }

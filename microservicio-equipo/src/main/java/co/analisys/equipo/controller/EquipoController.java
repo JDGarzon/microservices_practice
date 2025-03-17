@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/equipo")
-public class MiembroController {
+public class EquipoController {
     @Autowired
     private EquipoService equipoService;
 
@@ -28,8 +28,8 @@ public class MiembroController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Equipo> getAllMiembros() {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
+    public List<Equipo> getAllEquipos() {
         return equipoService.obtenerTodosEquipos();
     }
 
@@ -42,8 +42,8 @@ public class MiembroController {
                 @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
             })
     @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Equipo addMiembro(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
+    public Equipo addEquipo(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
         return equipoService.registrarEquipo(new Equipo(null, nombre,descripcion,cantidad));
     }
 }
