@@ -14,7 +14,6 @@ import co.analisys.clase.dto.NotificacionDTO;
 import co.analisys.clase.dto.NotificacionHorarioDTO;
 import co.analisys.clase.config.RabbitMQConfig;
 
-
 @Service
 public class ClaseService {
     @Autowired
