@@ -51,5 +51,39 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
+
+    @Bean
+    public DirectExchange pagosExchange() {
+        return new DirectExchange("pagos-exchange");
+    }
+
+    @Bean
+    public DirectExchange pagosDLQExchange() {
+        return new DirectExchange("pagos-dlq-exchange");
+    }
+
+    @Bean
+    public Queue pagosQueue() {
+        return QueueBuilder.durable("pagos-queue")
+        .withArgument("x-dead-letter-exchange", "pagos-dlq-exchange")
+        .withArgument("x-dead-letter-routing-key", "pagos-dlq")
+        .withArgument("x-message-ttl", 30000)
+        .build();
+    }
+
+    @Bean
+    public Queue pagosDLQ() {
+        return QueueBuilder.durable("pagos-dlq").build();
+    }
+
+    @Bean
+    public Binding pagosBinding(Queue pagosQueue, DirectExchange pagosExchange) {
+        return BindingBuilder.bind(pagosQueue).to(pagosExchange).with("pagos-routing-key");
+    }
+
+    @Bean
+    public Binding pagosDLQBinding(Queue pagosDLQ, DirectExchange pagosDLQExchange) {
+        return BindingBuilder.bind(pagosDLQ).to(pagosDLQExchange).with("pagos-dlq");
+    }
 }
    
