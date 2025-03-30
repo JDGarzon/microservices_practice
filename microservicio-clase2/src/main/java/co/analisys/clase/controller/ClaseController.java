@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.analisys.clase.dto.ClaseRequest;
 import co.analisys.clase.model.Clase;
 import co.analisys.clase.service.ClaseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,10 +67,15 @@ public class ClaseController {
         return claseService.obtenerClase(id);
     }
 
-    @PostMapping("/add/{idClase}/idMiembro")
+    @PostMapping("/add/{idClase}/{idMiembro}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Clase registrarMiembroAClase(@PathVariable long idClase, @PathVariable long idMiembro) {
         return claseService.registrarMiembroAClase(idClase, idMiembro);
+    }
+
+     @PostMapping("/horario")
+    public Clase actualizarHorario(@RequestBody ClaseRequest request) {
+        return claseService.cambiarHorarioClase(request.getClaseId(), request.getTime());
     }
 
 }

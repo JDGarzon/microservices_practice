@@ -1,9 +1,10 @@
 package co.analisys.gimnasio.service;
-import co.analisys.gimnasio.dto.NotificacionDTO;
-import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import co.analisys.gimnasio.dto.NotificacionDTO;
+import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
 
 @Service
 public class NotificacionConsumer {
@@ -22,6 +23,11 @@ public class NotificacionConsumer {
 
     @RabbitListener(queues = "pagos-queue")
     public void recibirPago() {
-        notificacionService.enviarNotificacionPago();
+        notificacionService.procesarNotificacionPago();
+    }
+
+    @RabbitListener(queues = "pagos-dlq")
+    public void manejarPagosFallidos() {
+        notificacionService.procesarNotificacionPagoFallida();
     }
 }

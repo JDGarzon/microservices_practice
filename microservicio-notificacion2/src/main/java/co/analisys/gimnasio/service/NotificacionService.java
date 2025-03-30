@@ -1,11 +1,12 @@
 package co.analisys.gimnasio.service;
 
-import co.analisys.gimnasio.dto.NotificacionDTO;
-import org.springframework.stereotype.Service;
 import java.util.List;
-import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.amqp.rabbit.listener.ListenerExecutionFailedException;
+import org.springframework.stereotype.Service;
+
+import co.analisys.gimnasio.dto.NotificacionDTO;
+import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
 
 @Service
 public class NotificacionService {
@@ -33,6 +34,11 @@ public class NotificacionService {
         }
     }
 
+    @RabbitListener(queues = "pagos-dlq")
+    public void procesarNotificacionPagoFallida() {
+        System.out.println("Procesando notificación de pago fallida...");
+    }
+
     @RabbitListener(queues = "pagos-queue")
     public void procesarNotificacionPago() {
     try {
@@ -46,8 +52,9 @@ public class NotificacionService {
         System.out.println("Notificación de pago procesada exitosamente");
         } catch (Exception e) {
             System.err.println("Error en el proceso de notificación de pago, enviando a DLQ: " + e.getMessage());
-            throw new ListenerExecutionFailedException("Error en el proceso de notificación de pago", e);
+            throw new RuntimeException("Error en el proceso de notificación de pago");
         }
+    }
 
     private boolean procesoExitoso() {
         return Math.random() < 0.5;

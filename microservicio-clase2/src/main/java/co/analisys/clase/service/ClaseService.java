@@ -1,20 +1,19 @@
 package co.analisys.clase.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.analisys.clase.model.Clase;
-import co.analisys.clase.repository.ClaseRepository;
-import co.analisys.clase.exception.ClaseNoEncontradoException;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import co.analisys.clase.config.RabbitMQConfig;
 import co.analisys.clase.dto.NotificacionDTO;
 import co.analisys.clase.dto.NotificacionHorarioDTO;
-import co.analisys.clase.config.RabbitMQConfig;
+import co.analisys.clase.exception.ClaseNoEncontradoException;
+import co.analisys.clase.model.Clase;
+import co.analisys.clase.repository.ClaseRepository;
 
 @Service
 public class ClaseService {
@@ -50,6 +49,10 @@ public class ClaseService {
         NotificacionDTO notificacion = new NotificacionDTO(idMiembro.toString(), "Te has inscrito a la clase " + clase.getNombre());
         rabbitTemplate.convertAndSend("notificacion.exchange", "notificacion.routingkey", notificacion);
         return clase;
+    }
+
+    public void hacerPago(){
+        rabbitTemplate.convertAndSend("notificacion.exchange", "pagos", "Pago realizado");
     }
 
     public Clase cambiarHorarioClase(Long idClase, LocalDateTime horario) {

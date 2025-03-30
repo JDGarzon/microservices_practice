@@ -1,7 +1,6 @@
 package co.analisys.gimnasio.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +29,10 @@ public class NotificacionController {
         @ApiResponse(responseCode = "403", description = "Acceso no autorizado")
     })
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_EDITAR')")
     public void enviarNotificacion(@RequestBody NotificacionDTO notificacion) {
         notificacionService.enviarNotificacion(notificacion);
     }
+
+   
+    
 }
