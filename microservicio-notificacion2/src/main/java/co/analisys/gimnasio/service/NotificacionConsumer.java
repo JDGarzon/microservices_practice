@@ -3,7 +3,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.analisys.gimnasio.dto.NotificacionDTO;
+import com.example.demo.notification.NotificacionDTO;
 import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
 
 @Service

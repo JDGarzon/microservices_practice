@@ -2,7 +2,6 @@ C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion
 C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\bean\SecurityConfig.java
 C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\config\RabbitMQConfig.java
 C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\controller\NotificacionController.java
-C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\dto\NotificacionDTO.java
 C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\dto\NotificacionHorarioDTO.java
 C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\NotificacionServiceApplication.java
 C:\Users\JUAN\Documents\GitHub\microservices_practice\microservicio-notificacion2\src\main\java\co\analisys\gimnasio\service\NotificacionConsumer.java

@@ -3,13 +3,26 @@ package co.analisys.gimnasio.service;
 import java.util.List;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import co.analisys.gimnasio.dto.NotificacionDTO;
+import com.example.demo.entrenamiento.ResumenEntrenamiento;
+import com.example.demo.notification.NotificacionDTO;
+
 import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
 
 @Service
 public class NotificacionService {
+
+    @KafkaListener(topics = "ocupacion-clases",  groupId = "monitoreo-grupo")
+    public void enviarNotificacionKafka(NotificacionDTO notificacion) {
+        System.out.println("Notificación enviada a " + notificacion.getUsuarioId() + ": "+ notificacion.getMensaje());
+    }
+
+    @KafkaListener(topics = "resumen-entrenamiento", groupId = "monitoreo-grupo")
+    public void consumirResumen(ResumenEntrenamiento resumen) {
+        System.out.println("📥 Recibido resumen en trenamiento: " + resumen);
+    }
 
     @RabbitListener(queues = "notificacion.queue")
     public void recibirNotificacion(NotificacionDTO notificacion) {
@@ -41,15 +54,15 @@ public class NotificacionService {
 
     @RabbitListener(queues = "pagos-queue")
     public void procesarNotificacionPago() {
-    try {
-        // Simular procesamiento de notificación de pago
-        System.out.println("Procesando notificación de pago...");
-        Thread.sleep(5000);
-        if (!procesoExitoso()) {
-            throw new RuntimeException("Error en el proceso de notificación de pago");
-        }
+        try {
+            // Simular procesamiento de notificación de pago
+            System.out.println("Procesando notificación de pago...");
+            Thread.sleep(5000);
+            if (!procesoExitoso()) {
+                throw new RuntimeException("Error en el proceso de notificación de pago");
+            }
 
-        System.out.println("Notificación de pago procesada exitosamente");
+            System.out.println("Notificación de pago procesada exitosamente");
         } catch (Exception e) {
             System.err.println("Error en el proceso de notificación de pago, enviando a DLQ: " + e.getMessage());
             throw new RuntimeException("Error en el proceso de notificación de pago");
