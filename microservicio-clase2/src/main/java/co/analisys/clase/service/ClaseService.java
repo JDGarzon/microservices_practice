@@ -99,7 +99,7 @@ public class ClaseService {
                 + "Miembros actuales: " + clase.getMiembros().toString());
         
 
-        CompletableFuture<SendResult<String,NotificacionDTO>> future =kafkaTemplate.send("ocupacion-clases", notificacionKafka);
+        CompletableFuture<SendResult<String,NotificacionDTO>> future = kafkaTemplate.send("ocupacion-clases", notificacionKafka);
 
         future.whenComplete((result, ex) -> {
             if (ex == null) {

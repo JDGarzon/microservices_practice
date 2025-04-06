@@ -2,11 +2,11 @@ package co.analisys.gimnasio.service;
 
 import java.util.List;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entrenamiento.ResumenEntrenamiento;
 import com.example.demo.notification.NotificacionDTO;
 
 import co.analisys.gimnasio.dto.NotificacionHorarioDTO;
@@ -16,12 +16,12 @@ public class NotificacionService {
 
     @KafkaListener(topics = "ocupacion-clases",  groupId = "monitoreo-grupo")
     public void enviarNotificacionKafka(NotificacionDTO notificacion) {
-        System.out.println("Notificación enviada a " + notificacion.getUsuarioId() + ": "+ notificacion.getMensaje());
+        System.out.println("KAFKA: Usuario: " + notificacion.getUsuarioId() + "Mensaje: "+ notificacion.getMensaje());
     }
 
     @KafkaListener(topics = "resumen-entrenamiento", groupId = "monitoreo-grupo")
-    public void consumirResumen(ResumenEntrenamiento resumen) {
-        System.out.println("📥 Recibido resumen en trenamiento: " + resumen);
+    public void consumirResumen(ConsumerRecord<String, String> record) {
+        System.out.println("📥 Recibido resumen en trenamiento: " + record.value());
     }
 
     @RabbitListener(queues = "notificacion.queue")

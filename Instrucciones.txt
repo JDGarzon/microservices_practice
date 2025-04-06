@@ -1,0 +1,4 @@
+Es necesrio agregar el notification-dto-0.0.1-SNAPSHOT.jar a ambos proyectos microservicio-clase2 y microservicio-notificacion2
+comando
+
+mvn install:install-file -Dfile="ruta al archivo notification-dto-0.0.1-SNAPSHOT.jar" -DgroupId=com.example -DartifactId=notification-dto -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar
