@@ -10,19 +10,12 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.apigateway.ApiGateway.service.KeycloakAuthService;
 
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ApiGatewayApplication {
-
-	private final KeycloakAuthService authService;
-
-	public ApiGatewayApplication (KeycloakAuthService authService) {
-		this.authService = authService;
-	}
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApiGatewayApplication.class);
 

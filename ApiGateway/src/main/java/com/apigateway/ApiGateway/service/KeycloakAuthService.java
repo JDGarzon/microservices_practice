@@ -17,9 +17,6 @@ public class KeycloakAuthService {
     }
 
     public Mono<String> login(String username, String password) {
-        System.out.println("***************************************");
-        System.out.println("Logging in with username: " + username + " and password: " + password);
-        System.out.println("***************************************");
     
         return webClient.post()
                 .uri("/realms/gimnasio/protocol/openid-connect/token")
