@@ -1,4 +1,4 @@
-package co.analisys.gimnasio.bean;
+/*package co.analisys.gimnasio.bean;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,4 +34,4 @@ public class SecurityConfig {
         jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRealmRoleConverter());
         return jwtConverter;
     }
-}
+}*/

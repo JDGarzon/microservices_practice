@@ -28,7 +28,7 @@ public class EntrenadorController {
     @Autowired
     private EntrenadorService entrenadorService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(EntrenadorController.class);
 
     @Operation(summary = "Obtener todos los entrenadores"
             , description = "Obtiene todos los entrenadores registrados en la base de datos"

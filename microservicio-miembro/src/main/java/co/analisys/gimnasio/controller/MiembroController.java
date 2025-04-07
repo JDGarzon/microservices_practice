@@ -29,7 +29,7 @@ public class MiembroController {
     @Autowired
     private MiembroService circulacionService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiembroController.class);
 
     @Operation(summary = "Obtener todos los miembros"
             , description = "Obtiene todos los miembros registrados en la base de datos"

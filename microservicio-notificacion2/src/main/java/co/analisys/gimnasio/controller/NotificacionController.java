@@ -21,7 +21,7 @@ public class NotificacionController {
     @Autowired
     private NotificacionService notificacionService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(NotificacionController.class);
 
     @Operation(
         summary = "Enviar notificación",
