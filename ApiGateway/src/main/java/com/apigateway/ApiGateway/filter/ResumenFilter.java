@@ -2,7 +2,11 @@ package com.apigateway.ApiGateway.filter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -10,8 +14,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.core.io.buffer.DataBuffer;
 import reactor.core.publisher.Mono;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,28 +32,28 @@ public class ResumenFilter implements GatewayFilter {
         WebClient client = webClientBuilder.build();
 
         Mono<List<Object>> miembrosMono = client.get()
-                .uri("http://miembro-service/all")
+                .uri("http://localhost:8086/miembro/all")
                 .headers(headers -> copyAuthHeader(exchange, headers))
                 .retrieve()
                 .bodyToFlux(Object.class)
                 .collectList();
 
         Mono<List<Object>> entrenadoresMono = client.get()
-                .uri("http://entrenador-service/all")
+                .uri("http://localhost:8084/entrenador/all")
                 .headers(headers -> copyAuthHeader(exchange, headers))
                 .retrieve()
                 .bodyToFlux(Object.class)
                 .collectList();
 
         Mono<List<Object>> clasesMono = client.get()
-                .uri("http://clase-service/all")
+                .uri("http://localhost:8083/clase/all")
                 .headers(headers -> copyAuthHeader(exchange, headers))
                 .retrieve()
                 .bodyToFlux(Object.class)
                 .collectList();
 
         Mono<List<Object>> equiposMono = client.get()
-                .uri("http://equipo-service/all")
+                .uri("http://localhost:8285/equipo/all")
                 .headers(headers -> copyAuthHeader(exchange, headers))
                 .retrieve()
                 .bodyToFlux(Object.class)
@@ -98,4 +101,6 @@ public class ResumenFilter implements GatewayFilter {
             headers.set(HttpHeaders.AUTHORIZATION, auth);
         }
     }
+
+   
 }
