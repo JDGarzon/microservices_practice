@@ -2,8 +2,12 @@ package co.analisys.equipo.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +21,6 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/equipo")
@@ -28,7 +28,7 @@ public class EquipoController {
     @Autowired
     private EquipoService equipoService;
 
-    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
+    private static final Logger logger = LoggerFactory.getLogger(EquipoController.class);
 
     @Operation(summary = "Obtener todos los equipos"
             , description = "Obtiene todos los equipos registrados en la base de datos"
