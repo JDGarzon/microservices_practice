@@ -16,4 +16,11 @@ public class ClaseServiceApplication {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
+
+	@Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .filter(new ServletBearerExchangeFilterFunction())
+                .build();
+    }
 }

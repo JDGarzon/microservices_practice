@@ -23,6 +23,10 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/clase")
@@ -32,6 +36,9 @@ public class ClaseController {
 
     @Autowired
     private RecuperacionService recuperacionService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
+
 
     @Operation(summary = "Obtener todas las clases"
             , description = "Obtiene todas las clases registradas en la base de datos"
@@ -43,12 +50,18 @@ public class ClaseController {
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Clase> obtenerTodasClases() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return claseService.obtenerTodasClases();
     }
 
     @GetMapping("/kafka")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public boolean probarKafka() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         claseService.probarKafka();
         return true;
     }
@@ -66,6 +79,9 @@ public class ClaseController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Clase registrarClase(@RequestBody Clase nuevaClase) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return claseService.registrarClase(nuevaClase);
     }
 
@@ -80,23 +96,35 @@ public class ClaseController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Clase obtenerClase(@PathVariable Long id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return claseService.obtenerClase(id);
     }
 
     @PostMapping("/add/{idClase}/{idMiembro}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Clase registrarMiembroAClase(@PathVariable long idClase, @PathVariable long idMiembro) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return claseService.registrarMiembroAClase(idClase, idMiembro);
     }
 
      @PostMapping("/horario")
     public Clase actualizarHorario(@RequestBody ClaseRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return claseService.cambiarHorarioClase(request.getClaseId(), request.getTime());
     }
 
     @PostMapping("/entrenamiento")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public void enviarDatosEntrenamiento(@RequestBody DatosEntrenamiento datos) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         claseService.enviarDatosEntrenamiento(datos);
 
     }
@@ -104,6 +132,9 @@ public class ClaseController {
     @PatchMapping("/recuperar")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public void recuperarUltimo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         recuperacionService.iniciarProcesamiento();
     }
 }

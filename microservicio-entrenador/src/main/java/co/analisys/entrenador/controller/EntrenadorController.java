@@ -17,12 +17,18 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/entrenador")
 public class EntrenadorController {
     @Autowired
     private EntrenadorService entrenadorService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
 
     @Operation(summary = "Obtener todos los entrenadores"
             , description = "Obtiene todos los entrenadores registrados en la base de datos"
@@ -34,6 +40,9 @@ public class EntrenadorController {
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public List<Entrenador> obtenerTodosEntrenadores() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return entrenadorService.obtenerTodosEntrenadores();
     }
 
@@ -48,6 +57,9 @@ public class EntrenadorController {
     @PostMapping("/add/{nombre}/{especialidad}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Entrenador registrarEntrenador(@PathVariable String nombre, @PathVariable String especialidad) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return entrenadorService.registrarEntrenador(new Entrenador(null,nombre, especialidad));
     }
 
@@ -62,6 +74,9 @@ public class EntrenadorController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Entrenador obtenerEntrenador(@PathVariable Long id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return entrenadorService.obtenerEntrenador(id);
     }
 }

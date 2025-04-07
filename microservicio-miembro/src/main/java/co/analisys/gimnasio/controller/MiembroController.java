@@ -18,12 +18,18 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/miembro")
 public class MiembroController {
     @Autowired
     private MiembroService circulacionService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
 
     @Operation(summary = "Obtener todos los miembros"
             , description = "Obtiene todos los miembros registrados en la base de datos"
@@ -35,6 +41,9 @@ public class MiembroController {
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public List<Miembro> getAllMiembros() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return circulacionService.obtenerTodosMiembros();
     }
 
@@ -49,6 +58,9 @@ public class MiembroController {
     @PostMapping("/add/{nombre}/{email}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER','ROLE_MEMBER')")
     public Miembro addMiembro(@PathVariable String nombre, @PathVariable String email) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return circulacionService.registrarMiembro(new Miembro(null, nombre,email,new FechaInscripcion()));
     }
 }

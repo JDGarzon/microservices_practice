@@ -10,13 +10,18 @@ import com.example.demo.notification.NotificacionDTO;
 import co.analisys.gimnasio.service.NotificacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/notificar")
 public class NotificacionController {
     @Autowired
     private NotificacionService notificacionService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
 
     @Operation(
         summary = "Enviar notificación",
@@ -30,6 +35,9 @@ public class NotificacionController {
     })
     @PostMapping("/rb")
     public void enviarNotificacion(@RequestBody NotificacionDTO notificacion) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         notificacionService.enviarNotificacion(notificacion);
     }
 
@@ -45,6 +53,9 @@ public class NotificacionController {
     })
     @PostMapping
     public void enviarNotificacionKafka(@RequestBody NotificacionDTO notificacion) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         notificacionService.enviarNotificacionKafka(notificacion);
     }
 

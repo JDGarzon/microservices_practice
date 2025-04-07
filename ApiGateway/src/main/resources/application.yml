@@ -1,0 +1,68 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: apigateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/gimnasio/protocol/openid-connect/certs
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/gimnasio
+        registration:
+          spring-with-test-scope:
+            provider: keycloak
+            client-id: spring-with-test-scope
+            client-secret: oOZ5lpKPMvm2hXSU9G5Z9Q8rBH1dE39a
+            authorization-grant-type: authorization_code
+            scope: openid
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+      routes:
+        - id: clase-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/clase/**
+        - id: notificacion-service
+          uri: http://localhost:8087
+          predicates:
+            - Path=/notificacion/**
+        - id: miembro-service
+          uri: http://localhost:8086
+          predicates:
+            - Path=/miembro/**
+        - id: equipo-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/equipo/**
+        - id: entrenador-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/entrenador/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+  metrics:
+    tags:
+      enabled: true

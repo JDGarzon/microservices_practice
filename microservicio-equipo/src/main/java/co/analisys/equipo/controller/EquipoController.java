@@ -17,12 +17,18 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/equipo")
 public class EquipoController {
     @Autowired
     private EquipoService equipoService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
 
     @Operation(summary = "Obtener todos los equipos"
             , description = "Obtiene todos los equipos registrados en la base de datos"
@@ -34,6 +40,9 @@ public class EquipoController {
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public List<Equipo> getAllEquipos() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return equipoService.obtenerTodosEquipos();
     }
 
@@ -48,6 +57,9 @@ public class EquipoController {
     @PostMapping("/add/{nombre}/{descripcion}/{cantidad}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TRAINER')")
     public Equipo addEquipo(@PathVariable String nombre, @PathVariable String descripcion,@PathVariable int cantidad) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        logger.info("Usuario autenticado: {}", auth.getName());
+        logger.info("Authorities: {}", auth.getAuthorities());
         return equipoService.registrarEquipo(new Equipo(null, nombre,descripcion,cantidad));
     }
 }
