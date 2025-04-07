@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.Authentication;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/equipo")
@@ -29,6 +30,20 @@ public class EquipoController {
     private EquipoService equipoService;
 
     private static final Logger logger = LoggerFactory.getLogger(ClaseController.class);
+
+
+    @Operation(summary = "Prueba de servicio"
+            , description = "Prueba de servicio para verificar la conexión"
+            , tags = {"equipo"}
+            , responses = {
+                @ApiResponse(responseCode = "200", description = "Servicio funcionando"),
+                @ApiResponse(responseCode = "500", description = "Error interno en el servidor")
+            })
+    @GetMapping
+    public String testService(HttpServletRequest request) {
+        logger.info("I am {}", request.getRequestURL().toString());
+        return request.getRequestURL().toString();
+    }
 
     @Operation(summary = "Obtener todos los equipos"
             , description = "Obtiene todos los equipos registrados en la base de datos"
