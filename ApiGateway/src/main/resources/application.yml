@@ -28,23 +28,23 @@ spring:
         - TokenRelay=
       routes:
         - id: clase-service
-          uri: http://localhost:8083
+          uri: lb://clase-service
           predicates:
             - Path=/clase/**
         - id: notificacion-service
-          uri: http://localhost:8087
+          uri: lb://notificacion-service
           predicates:
             - Path=/notificacion/**
         - id: miembro-service
-          uri: http://localhost:8086
+          uri: lb://miembro-service
           predicates:
             - Path=/miembro/**
         - id: equipo-service
-          uri: http://localhost:8085
+          uri: lb://equipo-service
           predicates:
             - Path=/equipo/**
         - id: entrenador-service
-          uri: http://localhost:8084
+          uri: lb://entrenador-service
           predicates:
             - Path=/entrenador/**
 
